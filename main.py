@@ -18,14 +18,19 @@ title_text.grid(columnspan=10,column=0,row=0)
 
 prompt = tk.Label(root,text="Click one of the options to begin",font=("Verdana",20),bg="White")
 prompt.grid(columnspan=10,column=0,row=1)
+
+def open_new():
+    canvas = tk.Toplevel(root)
+    canvas.grid(columnspan=5,rowspan=5)
+
 major_zones_text = tk.StringVar()
 major_zones_text.set("America, Canada, and India")
-major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana")
+major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new())
 major_zones_btn.grid(column=1,row=2)
 
 other_zones_text = tk.StringVar()
 other_zones_text.set("Other Countries")
-other_zones_btn = tk.Button(root, textvariable = other_zones_text, font="Verdana")
+other_zones_btn = tk.Button(root, textvariable = other_zones_text, font="Verdana", command=lambda:open_new())
 other_zones_btn.grid(column=4,row=2)
 
 root.mainloop()
