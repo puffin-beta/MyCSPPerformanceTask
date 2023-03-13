@@ -50,6 +50,9 @@ root.mainloop()
 #
 # https://www.geeksforgeeks.org/python-geometry-method-in-tkinter/
 #
-# 
+# https://www.tutorialspoint.com/python/tk_listbox.htm
+# https://www.geeksforgeeks.org/python-tkinter-listbox-widget/
+# https://www.geeksforgeeks.org/python-tkinter-listbox-widget/
+# https://www.geeksforgeeks.org/how-to-read-text-file-into-list-in-python/
 #
 #
