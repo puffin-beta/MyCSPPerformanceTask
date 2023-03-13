@@ -1,5 +1,7 @@
 import tkinter as tk
+from tkinter import *
 from PIL import Image, ImageTk
+import major_zones
 
 root = tk.Tk()
 
@@ -21,11 +23,8 @@ def open_main():
     prompt.grid(columnspan=10,column=0,row=1)
 
     def open_new():
-        root2 = tk.Tk()
-        canvas = tk.Canvas(root2, width=600, height=300, bg="white")
-        root2.geometry("600x300")
         root.destroy()
-        root2.mainloop()
+        major_zones.create_ui()
 
     major_zones_text = tk.StringVar()
     major_zones_text.set("America, Canada, and India")
@@ -40,3 +39,17 @@ def open_main():
 open_main()
 
 root.mainloop()
+
+# Sources used log (for future benefit):
+#
+# https://raw.githubusercontent.com/grammakov/USA-cities-and-states/master/us_cities_states_counties.csv
+#
+# https://www.youtube.com/watch?v=itRLRfuL_PQ (basic tkinter functionality)
+#
+# https://www.youtube.com/watch?v=q2LI3w-RGL0 (add CSV to tkinter)
+#
+# https://www.geeksforgeeks.org/python-geometry-method-in-tkinter/
+#
+# 
+#
+#
