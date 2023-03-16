@@ -7,6 +7,7 @@ def group_elements(raw_text,desired_character,final_list):
     for c in raw_text:
         if c == desired_character:
             final_list.append(temp)
+            temp = ""
         else:
             temp += c
             continue
@@ -24,6 +25,8 @@ def create_ui():
     del(Data[0])
     del Data, root_file
 
+    main_file = open("uscities.csv",'r')
+
     subroot.title("MAJOR ZONES!")
     canvas = tk.Canvas(subroot,width=800,height=600,bg="White")
     canvas.grid(columnspan=4,rowspan=4)
@@ -33,14 +36,9 @@ def create_ui():
     list_of_question_starters = []
     list_of_question_starters = group_elements(string,"\n",list_of_question_starters)
 
-    city_with_state = {}
-    with open(main_file,'r') as file_obj:  
-        reader_obj = csv.reader(file_obj)
-        for row in reader_obj:
-            try:
-                city_with_state[str(row[0])] = str(row[3])
-            except:
-                continue
-    
-    print(list_of_question_starters)
+    reader = csv.reader(main_file, delimiter=",")
+    modded_data = open("city_and_state.txt","w+")
+    for row in reader:
+        modded_data.write(str(row[0])+" "+str(row[3])+"\n")
+
     subroot.mainloop()
