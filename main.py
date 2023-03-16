@@ -57,7 +57,7 @@ root.mainloop()
 # https://www.geeksforgeeks.org/how-to-read-text-file-into-list-in-python/
 #
 #
-# https://discuss.python.org/t/how-can-i-retrieve-a-specific-element-in-a-csv-file/19659/3
+# https://www.geeksforgeeks.org/python-read-csv-columns-into-list/
 # (^^ above link for one code segment in major_zones.py)
 #
 # https://simplemaps.com/data/us-cities. (new database)
