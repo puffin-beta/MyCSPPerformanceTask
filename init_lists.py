@@ -1,6 +1,7 @@
 import csv
 questions_list = []
-city = state = []
+city = []
+state = []
 def get_lists():
     raw_data = open("uscities.csv","r")
 
@@ -10,6 +11,8 @@ def get_lists():
         temp = questions_data.readline()
         temp = temp[:-1]
         questions_list.append(temp)
+    
+    del temp
     
     reader = csv.DictReader(raw_data)
     for col in reader:

@@ -62,3 +62,5 @@ root.mainloop()
 #
 # https://simplemaps.com/data/us-cities. (new database)
 #
+# https://java2blog.com/add-character-to-string-in-python/ (character substitution in string)
+#
