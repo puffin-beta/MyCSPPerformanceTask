@@ -13,7 +13,7 @@ def get_lists():
 
     questions_data = open("question-starters.txt","r")
 
-    start_time = time.time()
+    #start_time = time.time()
     for i in range(3):
         temp = questions_data.readline()
         temp = temp[:-1]
@@ -26,8 +26,8 @@ def get_lists():
         city.append(col["city"])
         state.append(col["state_name"])
 
-    end_time = time.time()
-    print(end_time-start_time)
+    #end_time = time.time()
+    #print(end_time-start_time)
 
 class Question:
         def __init__(self):
