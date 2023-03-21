@@ -1,7 +1,6 @@
 import random as r
 import tkinter as tk
 import csv
-import time
 
 
 def get_lists():
@@ -45,7 +44,7 @@ class Question:
             if self.index == 2:
                 for i in range(3):
                     j = r.randint(0,len(state))
-                    if j == self.picked_index:
+                    if j == self.picked_index or self.list_of_wrong_answers.count(state[j]) == 1:
                         continue
                     k = state[j]
                     self.list_of_wrong_answers.append(k)
@@ -64,4 +63,7 @@ class Button:
                 a = "green"
             self = tk.Button(self.root,text=t,font="Verdana",color=self.color,activebackground=a)
             self.grid(column=c,row=r)
+
+
+    
         

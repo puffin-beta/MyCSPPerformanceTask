@@ -7,35 +7,39 @@ import major_zones
 root = tk.Tk()
 
 def open_main():
-    height = root.winfo_screenheight()
-    width = root.winfo_screenwidth()
+    height = 600
+    width = 800
     logo = Image.open("logo.png")
     logo = ImageTk.PhotoImage(logo)
     root.iconphoto(False,logo)
     root.title("Where Are You!")
 
     screen = tk.Canvas(root,width=width,height=height,bg="white")
-    screen.grid(columnspan=10, rowspan=10)
+    screen.grid(columnspan=6, rowspan=6)
 
-    title_text = tk.Label(root,text="Test your US Geography Skills Here!",font=("Verdana",40),bg="White")
+    title_text = tk.Label(root,text="Test your US Geography Skills Here!",font=("Verdana",30),bg="White")
     title_text.grid(columnspan=10,column=0,row=0)
 
-    prompt = tk.Label(root,text="Click Start to begin",font=("Verdana",20),bg="White")
+    prompt = tk.Label(root,text="Select a difficulty and click Start to begin",font=("Verdana",20),bg="White")
     prompt.grid(columnspan=10,column=0,row=1)
 
     def open_new():
-        root.destroy()
-        major_zones.create_ui()
+        if drop_text.get() != "Select a difficulty:":
+            root.destroy()
+            major_zones.create_ui(drop_text.get())
+
+    drop_text = StringVar()
+    drop_text.set("Select a difficulty:")
+    options = ["easy","medium","hard"]
+    time_drop = tk.OptionMenu(root,drop_text,*options)
+    time_drop.grid(column=2,row=2)
 
     major_zones_text = tk.StringVar()
     major_zones_text.set("Start Game")
-    major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new())
-    major_zones_btn.grid(column=4,row=2)
-
-    #other_zones_text = tk.StringVar()
-    #other_zones_text.set("Other Countries")
-    #other_zones_btn = tk.Button(root, textvariable = other_zones_text, font="Verdana", command=lambda:open_new())
-    #other_zones_btn.grid(column=4,row=2)
+    if drop_text.get() == "Select a difficulty:":
+        major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=DISABLED)
+    major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
+    major_zones_btn.grid(column=2,row=3)
 
 open_main()
 
