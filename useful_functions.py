@@ -1,6 +1,8 @@
 import random as r
 import tkinter as tk
+from tkinter import *
 import csv
+import time
 
 
 def get_lists():
@@ -64,6 +66,30 @@ class Button:
             self = tk.Button(self.root,text=t,font="Verdana",color=self.color,activebackground=a)
             self.grid(column=c,row=r)
 
+class Timer:
+    def __init__(self,root,difficulty):
+        self.difficulty = difficulty
+        self.max_time = 0
+        self.root = root
+        if self.difficulty == "easy":
+            self.max_time = 45
+        elif self.difficulty == "medium":
+            self.max_time = 30
+        elif self.difficulty == "hard":
+            self.max_time = 20
+    def tick(self):
+        startTime = time.time()
+        currentTime = startTime
+        last_time = time.seconds()
+        while (currentTime - startTime < self.max_time):
+            temp = ""
+            currentTime = time.time()
+            deltaTime = self.max_time - (currentTime - startTime)
+            if (last_time - deltaTime) >= 1:
+                last_time -= 1
+            print(last_time)
+            self.root.update()
+        print("Time is up")
 
     
         
