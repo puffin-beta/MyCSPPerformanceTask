@@ -31,7 +31,7 @@ def create_ui(timer):
             temp_count += 1
         else:
             continue
-    print(answers)
+    #print(answers)
     
     for i in range(4):
         IsCorrect = None

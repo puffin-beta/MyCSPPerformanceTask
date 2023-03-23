@@ -80,16 +80,19 @@ class Timer:
     def tick(self):
         startTime = time.time()
         currentTime = startTime
-        last_time = time.seconds()
         while (currentTime - startTime < self.max_time):
             temp = ""
             currentTime = time.time()
-            deltaTime = self.max_time - (currentTime - startTime)
-            if (last_time - deltaTime) >= 1:
+            deltaTime = int(self.max_time - (currentTime - startTime))
+            #print(deltaTime)
+            last_time = int(time.gmtime().tm_sec)
+            if (last_time - deltaTime >= 1) :
                 last_time -= 1
-            print(last_time)
+                print(last_time)
+            #print(" ")
             self.root.update()
         print("Time is up")
+        #last_time = float(time.gmtime().tm_sec)
 
     
         
