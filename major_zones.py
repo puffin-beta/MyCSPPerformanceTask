@@ -32,6 +32,7 @@ def create_ui(timer):
             temp_count += 1
         else:
             continue
+    #print(answers)
     
     for i in range(4):
         IsCorrect = None
@@ -39,17 +40,4 @@ def create_ui(timer):
         answer_btn = Button(subroot,IsCorrect)
         answer_btn.draw(answers[i],0,i+1)
 
-    def counter():
-        if timer == "easy":
-            count = 45
-        elif timer == "medium":
-            count = 30
-        elif timer == "hard":
-            count = 20
-        while count > 0:
-            time.sleep(1)
-            count -= 1
-            print(count)
-
-    timer = threading.Thread(target=counter,daemon=True).start()
     subroot.mainloop()
