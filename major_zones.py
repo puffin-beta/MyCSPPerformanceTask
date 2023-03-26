@@ -39,5 +39,8 @@ def create_ui(timer):
         IsCorrect = True if answers[i] == q1.state else False
         answer_btn = Button(subroot,IsCorrect)
         answer_btn.draw(answers[i],0,i+1)
-
+    
+    timer = Timer(subroot,timer)
+    timer.tick()
+    
     subroot.mainloop()
