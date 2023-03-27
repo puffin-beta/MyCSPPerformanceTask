@@ -30,6 +30,13 @@ def get_lists():
     #end_time = time.time()
     #print(end_time-start_time)
 
+def tick(max_time):
+    while max_time > 0:
+        time.sleep(1)
+        max_time -= 1
+        return max_time
+    return 0
+
 class Question:
         def __init__(self):
             pass
@@ -52,19 +59,26 @@ class Question:
                     self.list_of_wrong_answers.append(k)
 
 class Button:
-        def __init__(self,root,correct,width=200,height=100,color=None):
+        def __init__(self,root,correct,width=200,height=100,color=None,c=0,r=0):
             self.color = color
             self.correct = correct
             self.activecolor = None
             self.root = root
-            pass
-        def draw(self,t,c=0,r=0):
-            if self.correct == False:
-                a = "red"
-            if self.correct == True:
-                a = "green"
-            self = tk.Button(self.root,text=t,font="Verdana",color=self.color,activebackground=a)
-            self.grid(column=c,row=r)
+        def check_answer(self,correct):
+            if correct == False:
+                print("You are wrong!")
+            elif correct == True:
+                print("You are correct!")
+        def draw(self,buttonObj,t,c=0,r=0):
+            buttonObj = tk.Button(buttonObj.root,text=buttonObj.t,font="Verdana",color=buttonObj.color,command=lambda:check_answer(buttonObj.correct))
+            buttonObj.grid(column=c,row=r)
+
+def check_answer(correct):
+    if correct == False:
+        print("You are wrong!")
+    else:
+        print("You are correct!")
+        
 
 class Timer:
     def __init__(self,root,difficulty):

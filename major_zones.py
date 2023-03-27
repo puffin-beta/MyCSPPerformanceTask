@@ -40,6 +40,20 @@ def create_ui(timer):
         answer_btn = Button(subroot,IsCorrect)
         answer_btn.draw(answers[i],0,i+1)
     
+    def tick(max_time):
+        while max_time > 0:
+            time.sleep(1)
+            max_time -= 1
+            print(max_time)
+
+    time_left = 0
+    if timer == "easy":
+        time_left = 45
+    elif timer == "medium":
+        time_left = 30
+    elif timer == "hard":
+        time_left = 20
     
-    
+    timer_thread = threading.Thread(target=tick,daemon=True,args=(time_left,)).start()
+
     subroot.mainloop()
