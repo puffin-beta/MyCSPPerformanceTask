@@ -36,15 +36,25 @@ def create_ui(timer):
     
     for i in range(4):
         IsCorrect = None
-        IsCorrect = True if answers[i] == q1.state else False
-        answer_btn = Button(subroot,IsCorrect)
-        answer_btn.draw(answers[i],0,i+1)
+        if answers[i] == q1.state:
+            IsCorrect = True
+        else:
+            IsCorrect = False
+        answer_btn = Button2(subroot)
+        answer_btn.addCorrect(IsCorrect)
+        answer_btn = Button2(subroot,text=answers[i],font="Verdana",bg="white")
+        #answer_btn.addCorrect(IsCorrect)
+        answer_btn.grid(column=0,row=i+1)
     
+    #my_button = Button2(subroot,text="Hello")
+    #my_button.grid(column=2,row=2)
+
     def tick(max_time):
         while max_time > 0:
             time.sleep(1)
             max_time -= 1
             print(max_time)
+        print("Time\'s Up! The correct answer is {0}.".format(q1.state))
 
     time_left = 0
     if timer == "easy":

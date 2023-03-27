@@ -68,3 +68,6 @@ root.mainloop()
 #
 # https://java2blog.com/add-character-to-string-in-python/ (character substitution in string)
 #
+# https://stackoverflow.com/questions/24050068/tkinter-making-classes-for-buttons-and-labels
+# (^^^ above link for inheriting tkinter button class)
+#

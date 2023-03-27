@@ -58,20 +58,26 @@ class Question:
                     k = state[j]
                     self.list_of_wrong_answers.append(k)
 
-class Button:
-        def __init__(self,root,correct,width=200,height=100,color=None,c=0,r=0):
-            self.color = color
-            self.correct = correct
-            self.activecolor = None
-            self.root = root
-        def check_answer(self,correct):
-            if correct == False:
-                print("You are wrong!")
-            elif correct == True:
-                print("You are correct!")
-        def draw(self,buttonObj,t,c=0,r=0):
-            buttonObj = tk.Button(buttonObj.root,text=buttonObj.t,font="Verdana",color=buttonObj.color,command=lambda:check_answer(buttonObj.correct))
-            buttonObj.grid(column=c,row=r)
+class Button2(Button):
+    def __init__(self,*args,**kwargs):
+        Button.__init__(self,*args,**kwargs)
+    def addCorrect(self,correct):
+        self.correct = correct
+
+#class Button:
+#        def __init__(self,root,correct,width=200,height=100,color=None,c=0,r=0):
+#            self.color = color
+#            self.correct = correct
+#            self.activecolor = None
+#            self.root = root
+#        def check_answer(self,correct):
+#            if correct == False:
+#                print("You are wrong!")
+#            elif correct == True:
+#                print("You are correct!")
+#        def draw(self,buttonObj,t,c=0,r=0):
+#            buttonObj = tk.Button(buttonObj.root,text=buttonObj.t,font="Verdana",color=buttonObj.color,command=lambda:check_answer(buttonObj.correct))
+#            buttonObj.grid(column=c,row=r)
 
 def check_answer(correct):
     if correct == False:
