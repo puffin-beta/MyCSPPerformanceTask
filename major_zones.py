@@ -5,6 +5,7 @@ from useful_functions import *
 import random as r
 import time
 import threading
+import signal
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -35,31 +36,31 @@ def create_ui(timer):
     #print(answers)
     
     for i in range(4):
-        IsCorrect = None
-        if answers[i] == q1.state:
+        IsCorrect = ""
+        if str(answers[i]) == str(q1.state):
             IsCorrect = True
         else:
             IsCorrect = False
         answer_btn = Button2(subroot)
         answer_btn.addCorrect(IsCorrect)
         answer_btn = Button2(subroot,text=answers[i],font="Verdana",bg="white",command=lambda:evaluate_answer(IsCorrect,q1.state))
-        #answer_btn.addCorrect(IsCorrect)
         answer_btn.grid(column=0,row=i+1)
     
     #my_button = Button2(subroot,text="Hello")
     #my_button.grid(column=2,row=2)
 
-    answered = False
+    answered = threading.Event()
 
     def tick(max_time):
         while max_time > 0:
             time.sleep(1)
             max_time -= 1
-            print(max_time)
+            #print(max_time)
             time_label = tk.Label(subroot,text=str(max_time).zfill(2),font=("Verdana",30),bg="White")
             time_label.grid(column=4,row=0)
-            if answered:
+            if answered.is_set():
                 break
+        print("Timer loop exitted")
         #print("Time\'s Up! The correct answer is {0}.".format(q1.state))
 
     time_left = 0
@@ -70,15 +71,12 @@ def create_ui(timer):
     elif timer == "hard":
         time_left = 20
     
-    timer_thread = threading.Thread(target=tick,daemon=True,args=(time_left,)).start()
+    timer_thread = threading.Thread(target=tick,args=(time_left,))
+    timer_thread.daemon = True
+    timer_thread.start()
 
     def evaluate_answer(IsCorrect,correct_option):
-        answered = True
-        timer_thread.kill()
-        if not IsCorrect:
-            print("The correct Answer is {0}".format(correct_option))
-        else:
-            print("You got it right!")
+        print(IsCorrect)
 
 
     subroot.mainloop()

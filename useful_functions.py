@@ -55,8 +55,9 @@ class Question:
                     j = r.randint(0,len(state))
                     if j == self.picked_index or self.list_of_wrong_answers.count(state[j]) == 1:
                         continue
-                    k = state[j]
-                    self.list_of_wrong_answers.append(k)
+                    else:
+                        k = state[j]
+                        self.list_of_wrong_answers.append(k)
 
 class Button2(Button):
     def __init__(self,*args,**kwargs):
