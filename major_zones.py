@@ -34,6 +34,12 @@ def create_ui(timer):
         else:
             continue
     #print(answers)
+
+    def evaluate_answer(IsCorrect,correct_option):
+        if IsCorrect == True:
+            print("Yay")
+        else:
+            print("Nay")
     
     for i in range(4):
         IsCorrect = ""
@@ -74,9 +80,6 @@ def create_ui(timer):
     timer_thread = threading.Thread(target=tick,args=(time_left,))
     timer_thread.daemon = True
     timer_thread.start()
-
-    def evaluate_answer(IsCorrect,correct_option):
-        print(IsCorrect)
 
 
     subroot.mainloop()
