@@ -5,7 +5,6 @@ from useful_functions import *
 import random as r
 import time
 import threading
-import signal
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -36,10 +35,11 @@ def create_ui(timer):
     #print(answers)
 
     def evaluate_answer(IsCorrect,correct_option):
+        print(correct_option)
         if IsCorrect == True:
-            print("Yay")
-        else:
-            print("Nay")
+            print("Correct")
+        elif IsCorrect == False:
+            print("Wrong")
     
     for i in range(4):
         IsCorrect = ""
@@ -47,10 +47,13 @@ def create_ui(timer):
             IsCorrect = True
         else:
             IsCorrect = False
-        answer_btn = Button2(subroot)
-        answer_btn.addCorrect(IsCorrect)
+        #answer_btn = Button2(subroot)
+        answer_btn = None
         answer_btn = Button2(subroot,text=answers[i],font="Verdana",bg="white",command=lambda:evaluate_answer(IsCorrect,q1.state))
+        answer_btn.addCorrect(IsCorrect)
         answer_btn.grid(column=0,row=i+1)
+
+        print(answer_btn.correct)
     
     #my_button = Button2(subroot,text="Hello")
     #my_button.grid(column=2,row=2)
