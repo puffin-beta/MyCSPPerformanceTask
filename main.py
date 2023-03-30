@@ -26,7 +26,8 @@ def open_main():
     def open_new():
         if drop_text.get() != "Select a difficulty:":
             root.destroy()
-            major_zones.create_ui(drop_text.get())
+            diff = drop_text.get()
+            major_zones.create_ui(diff)
 
     drop_text = StringVar()
     drop_text.set("Select a difficulty:")
@@ -36,6 +37,7 @@ def open_main():
 
     major_zones_text = tk.StringVar()
     major_zones_text.set("Start Game")
+    major_zones_btn = tk.Button(root)
     if drop_text.get() == "Select a difficulty:":
         major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=DISABLED)
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)

@@ -80,12 +80,6 @@ class Button2(Button):
 #            buttonObj = tk.Button(buttonObj.root,text=buttonObj.t,font="Verdana",color=buttonObj.color,command=lambda:check_answer(buttonObj.correct))
 #            buttonObj.grid(column=c,row=r)
 
-def check_answer(correct):
-    if correct == False:
-        print("You are wrong!")
-    else:
-        print("You are correct!")
-        
 
 class Timer:
     def __init__(self,root,difficulty):
