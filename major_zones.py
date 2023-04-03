@@ -39,13 +39,23 @@ def create_ui(timer):
                 continue
 
         def evaluate_answer(IsCorrect,correct_option):
+            global answered2
+            answered2 = True
+            my_button.after(1,my_button.destroy())
+            my_button2.after(1,my_button2.destroy())
+            my_button3.after(1,my_button3.destroy())
+            my_button4.after(1,my_button4.destroy())
+            label.after(1,label.destroy())
+            answered.is_set()
+            make_question()
+            answered2 = False
             if IsCorrect == "True":
                 print("Correct")
             elif IsCorrect == "False":
                 print("Wrong")
+            elif IsCorrect == "NULL":
+                print("Not Answered")
 
-            global answered2
-            answered2 = True
     
         my_button_correct = ("True" if answers[0] == q1.state else "False")
         my_button = Button2(subroot,text=(answers[0]),font=("Verdana",15))
@@ -74,14 +84,17 @@ def create_ui(timer):
         answered = threading.Event()
 
         def tick(max_time):
-            while max_time > 0:
+            max = max_time
+            while max > 0:
                 time.sleep(1)
-                max_time -= 1
-                time_label = tk.Label(subroot,text=str(max_time).zfill(2),font=("Verdana",30),bg="White")
+                max -= 1
+                time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
                 time_label.grid(column=4,row=0)
-                if answered.is_set():
-                    break
+                if answered.is_set() or answered2 == True:
+                    continue 
             print("Timer loop exitted")
+            time_label.after(1,time_label.destroy())
+            evaluate_answer("NULL",q1.state)
 
         time_left = 0
         if timer == "easy":
@@ -93,10 +106,14 @@ def create_ui(timer):
     
         timer_thread = threading.Thread(target=tick,args=(time_left,))
         timer_thread.daemon = True
-        timer_thread.start()
+        if answered2 == False:
+            timer_thread.is_alive = True
+            timer_thread.start()
+        
+        elif answered2 == True:
+            timer_thread.is_alive = False
+        
 
     make_question()
-    if answered2 == True:
-        canvas.delete('all')
 
     subroot.mainloop()
