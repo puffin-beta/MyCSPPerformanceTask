@@ -85,18 +85,20 @@ def create_ui(timer):
 
         def tick(max_time):
             max = max_time
-            while max > 0:
+            while max > 0 or (answered2 == True and answered.is_set()):
                 time.sleep(1)
                 max -= 1
                 time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
                 time_label.grid(column=4,row=0)
-                if answered.is_set() or answered2 == True:
-                    continue 
+            if answered.is_set() and answered2 == True:
+                print("Answered!")
+                time_label.after(1,time_label.destroy())
+                max = max_time 
             print("Timer loop exitted")
             time_label.after(1,time_label.destroy())
             evaluate_answer("NULL",q1.state)
 
-        time_left = 0
+        time_left = ''
         if timer == "easy":
             time_left = 45
         elif timer == "medium":
@@ -104,14 +106,16 @@ def create_ui(timer):
         elif timer == "hard":
             time_left = 20
     
-        timer_thread = threading.Thread(target=tick,args=(time_left,))
-        timer_thread.daemon = True
-        if answered2 == False:
-            timer_thread.is_alive = True
-            timer_thread.start()
+        timer_thread = threading.Thread(target=tick,args=(time_left,),daemon=True)
+        #if answered2 == False:
+        #    timer_thread.is_alive = True
         
-        elif answered2 == True:
-            timer_thread.is_alive = False
+        if answered2 == True:
+            #timer_thread.is_alive = False
+            timer_thread.join()
+            time.sleep(1)
+        
+        timer_thread.start()
         
 
     make_question()
