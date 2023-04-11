@@ -5,6 +5,8 @@ from useful_functions import *
 import random as r
 import time
 import threading
+from threading import Thread, Event
+import sys
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -16,9 +18,6 @@ def create_ui(timer):
     canvas.grid(columnspan=10,rowspan=10)
 
     def make_question():
-
-        global answered2
-        answered2 = False
 
         q1 = Question()
         q1.create_question()
@@ -39,22 +38,23 @@ def create_ui(timer):
                 continue
 
         def evaluate_answer(IsCorrect,correct_option):
-            global answered2
-            answered2 = True
+            #global answered2
+            #answered2 = True
             my_button.after(1,my_button.destroy())
             my_button2.after(1,my_button2.destroy())
             my_button3.after(1,my_button3.destroy())
             my_button4.after(1,my_button4.destroy())
             label.after(1,label.destroy())
-            answered.is_set()
+            answered.set()
             make_question()
-            answered2 = False
+            
             if IsCorrect == "True":
                 print("Correct")
             elif IsCorrect == "False":
                 print("Wrong")
             elif IsCorrect == "NULL":
                 print("Not Answered")
+            #answered2 = False
 
     
         my_button_correct = ("True" if answers[0] == q1.state else "False")
@@ -81,23 +81,27 @@ def create_ui(timer):
         my_button4['command'] = lambda:evaluate_answer(my_button4_correct,q1.state)
         my_button4.grid(column=0,row=5)
 
-        answered = threading.Event()
+        answered = Event()
 
         def tick(max_time):
             max = max_time
-            while max > 0 or (answered2 == True and answered.is_set()):
+            while max > 0:
+                if answered.is_set():
+                    #print("Answered!")
+                    #time_label.after(1,time_label.destroy())
+                    #del timer_thread
+                    max = max_time
+                    continue 
                 time.sleep(1)
                 max -= 1
                 time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
-                time_label.grid(column=4,row=0)
-            if answered.is_set() and answered2 == True:
-                print("Answered!")
-                time_label.after(1,time_label.destroy())
-                max = max_time 
+                time_label.grid(column=4,row=0)     
             print("Timer loop exitted")
             time_label.after(1,time_label.destroy())
-            evaluate_answer("NULL",q1.state)
-
+            quit()
+            #del subroot
+            #evaluate_answer("NULL",q1.state)
+            
         time_left = ''
         if timer == "easy":
             time_left = 45
@@ -105,17 +109,10 @@ def create_ui(timer):
             time_left = 30
         elif timer == "hard":
             time_left = 20
-    
-        timer_thread = threading.Thread(target=tick,args=(time_left,),daemon=True)
-        #if answered2 == False:
-        #    timer_thread.is_alive = True
         
-        if answered2 == True:
-            #timer_thread.is_alive = False
-            timer_thread.join()
-            time.sleep(1)
+        picked_process = Thread(target=tick,args=(time_left,))
         
-        timer_thread.start()
+        picked_process.start()
         
 
     make_question()
