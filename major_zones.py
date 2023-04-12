@@ -4,9 +4,9 @@ import useful_functions as lib
 from useful_functions import *
 import random as r
 import time
-import threading
 from threading import Thread, Event
 import sys
+import main
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -38,13 +38,12 @@ def create_ui(timer):
                 continue
 
         def evaluate_answer(IsCorrect,correct_option):
-            #global answered2
-            #answered2 = True
-            my_button.after(1,my_button.destroy())
-            my_button2.after(1,my_button2.destroy())
-            my_button3.after(1,my_button3.destroy())
-            my_button4.after(1,my_button4.destroy())
-            label.after(1,label.destroy())
+            my_button.destroy()
+            my_button2.destroy()
+            my_button3.destroy()
+            my_button4.destroy()
+            label.destroy()
+            time_label.destroy()
             answered.set()
             make_question()
             
@@ -54,7 +53,6 @@ def create_ui(timer):
                 print("Wrong")
             elif IsCorrect == "NULL":
                 print("Not Answered")
-            #answered2 = False
 
     
         my_button_correct = ("True" if answers[0] == q1.state else "False")
@@ -84,21 +82,23 @@ def create_ui(timer):
         answered = Event()
 
         def tick(max_time):
+            global thread_ended
+            thread_ended = False
             max = max_time
             while max > 0:
                 if answered.is_set():
-                    #print("Answered!")
-                    #time_label.after(1,time_label.destroy())
-                    #del timer_thread
                     max = max_time
                     continue 
                 time.sleep(1)
                 max -= 1
+                global time_label
                 time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
                 time_label.grid(column=4,row=0)     
             print("Timer loop exitted")
-            time_label.after(1,time_label.destroy())
-            quit()
+            #time_label.after(1,time_label.destroy())
+            thread_ended = True
+            subroot.destroy()
+            sys.exit()
             #del subroot
             #evaluate_answer("NULL",q1.state)
             
@@ -111,8 +111,10 @@ def create_ui(timer):
             time_left = 20
         
         picked_process = Thread(target=tick,args=(time_left,))
-        
         picked_process.start()
+        if thread_ended == True:
+            picked_process.join()
+            main.root.destroy()
         
 
     make_question()

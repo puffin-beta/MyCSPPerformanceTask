@@ -3,6 +3,7 @@ from tkinter import *
 import PIL
 from PIL import Image, ImageTk
 import major_zones
+from major_zones import create_ui
 
 root = tk.Tk()
 
