@@ -53,7 +53,7 @@ class Question:
             if self.index == 2:
                 for i in range(3):
                     j = r.randint(0,len(state))
-                    if j == self.picked_index or self.list_of_wrong_answers.count(state[j]) == 1:
+                    if state[j] in self.list_of_wrong_answers:
                         continue
                     else:
                         k = state[j]

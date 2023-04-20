@@ -6,7 +6,6 @@ import random as r
 import time
 from threading import Thread, Event
 import sys
-import main
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -16,6 +15,9 @@ def create_ui(timer):
     subroot.title("GAME WINDOW")
     canvas = tk.Canvas(subroot,width=800,height=600,bg="White")
     canvas.grid(columnspan=10,rowspan=10)
+
+    global isTerminated
+    isTerminated = False
 
     def make_question():
 
@@ -97,8 +99,9 @@ def create_ui(timer):
             print("Timer loop exitted")
             #time_label.after(1,time_label.destroy())
             thread_ended = True
-            subroot.destroy()
-            sys.exit()
+            isTerminated = True
+            #subroot.destroy()
+            #sys.exit()
             #del subroot
             #evaluate_answer("NULL",q1.state)
             
@@ -113,8 +116,9 @@ def create_ui(timer):
         picked_process = Thread(target=tick,args=(time_left,))
         picked_process.start()
         if thread_ended == True:
-            picked_process.join()
-            main.root.destroy()
+            exit()
+            #picked_process.join()
+            
         
 
     make_question()
