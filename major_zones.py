@@ -7,6 +7,8 @@ import time
 from threading import Thread, Event
 import sys
 
+thread_ended = False
+
 def create_ui(timer):
     subroot = tk.Tk()
     
@@ -15,9 +17,6 @@ def create_ui(timer):
     subroot.title("GAME WINDOW")
     canvas = tk.Canvas(subroot,width=800,height=600,bg="White")
     canvas.grid(columnspan=10,rowspan=10)
-
-    global isTerminated
-    isTerminated = False
 
     def make_question():
 
@@ -52,7 +51,7 @@ def create_ui(timer):
             if IsCorrect == "True":
                 print("Correct")
             elif IsCorrect == "False":
-                print("Wrong")
+                print("Wrong. the correct answer is {correct}".format(correct=correct_option))
             elif IsCorrect == "NULL":
                 print("Not Answered")
 
@@ -87,21 +86,20 @@ def create_ui(timer):
             global thread_ended
             thread_ended = False
             max = max_time
-            while max > 0:
-                if answered.is_set():
-                    max = max_time
-                    continue 
-                time.sleep(1)
-                max -= 1
-                global time_label
-                time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
-                time_label.grid(column=4,row=0)     
-            print("Timer loop exitted")
-            #time_label.after(1,time_label.destroy())
-            thread_ended = True
-            sys.exit()
-            #del subroot
-            #evaluate_answer("NULL",q1.state)
+            if not thread_ended:
+                while max > 0:
+                    if answered.is_set():
+                        max = max_time
+                        continue 
+                    time.sleep(1)
+                    max -= 1
+                    global time_label
+                    time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
+                    time_label.grid(column=4,row=0)     
+                print("Timer loop exitted")
+                thread_ended = True
+                subroot.destroy()
+                sys.exit(1)
             
         time_left = ''
         if timer == "easy":
@@ -113,9 +111,10 @@ def create_ui(timer):
         
         picked_process = Thread(target=tick,args=(time_left,))
         picked_process.start()
-        if thread_ended == True:
-            picked_process.join()
+        if thread_ended:
             subroot.destroy()
+            picked_process.join()
+            
         
     make_question()
 
