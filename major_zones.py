@@ -6,7 +6,8 @@ import random as r
 import time
 from threading import Thread, Event
 import sys
-import main
+
+thread_ended = False
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -98,7 +99,7 @@ def create_ui(timer):
             #time_label.after(1,time_label.destroy())
             thread_ended = True
             subroot.destroy()
-            sys.exit()
+            sys.exit(1)
             #del subroot
             #evaluate_answer("NULL",q1.state)
             
@@ -108,15 +109,16 @@ def create_ui(timer):
         elif timer == "medium":
             time_left = 30
         elif timer == "hard":
-            time_left = 20
+            time_left = 5
         
         picked_process = Thread(target=tick,args=(time_left,))
         picked_process.start()
-        if thread_ended == True:
+        if thread_ended:
             picked_process.join()
-            main.root.destroy()
+            del picked_process
+            subroot.destroy()
+            sys.exit(1)
         
-
     make_question()
 
     subroot.mainloop()
