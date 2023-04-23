@@ -98,6 +98,7 @@ def create_ui(timer):
                     time_label.grid(column=4,row=0)     
                 print("Timer loop exitted")
                 thread_ended = True
+                time_label.destroy()
                 subroot.destroy()
                 sys.exit(1)
             
@@ -111,10 +112,13 @@ def create_ui(timer):
         
         picked_process = Thread(target=tick,args=(time_left,))
         picked_process.start()
-        if thread_ended:
+        def end_game():
             subroot.destroy()
             picked_process.join()
-            
+        if thread_ended:
+            end_game()
+        
+        subroot.protocol("WM_DELETE_WINDOW",end_game)
         
     make_question()
 
