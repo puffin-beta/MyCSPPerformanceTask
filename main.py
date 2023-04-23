@@ -24,12 +24,10 @@ def open_main():
     prompt = tk.Label(root,text="Select a difficulty and click Start to begin",font=("Verdana",20),bg="White")
     prompt.grid(columnspan=10,column=0,row=1)
 
-    def trans():
-        screen['bg'] = None
 
     def open_new():
         if drop_text.get() != "Select a difficulty:":
-            screen.after(1,trans())
+            #screen.after(1,trans())
             diff = drop_text.get()
             create_ui(diff)
 
@@ -46,9 +44,6 @@ def open_main():
         major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=DISABLED)
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
-
-    if thread_ended:
-        screen['bg'] = "White"
 
 open_main()
 
