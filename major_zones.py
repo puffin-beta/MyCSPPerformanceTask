@@ -29,14 +29,14 @@ def create_ui(timer):
 
         answers = list(range(4))
         right_answer_index = r.randint(0,3)
-        answers[right_answer_index] = q1.state
         temp_count = 0
-        for i in range(4):
+        for i in range(len(answers)):
             if i != right_answer_index:
                 answers[i] = q1.list_of_wrong_answers[temp_count]
                 temp_count += 1
             else:
                 continue
+        answers[right_answer_index] = q1.state
 
         def evaluate_answer(IsCorrect,correct_option):
             my_button.destroy()
@@ -108,17 +108,18 @@ def create_ui(timer):
         elif timer == "medium":
             time_left = 30
         elif timer == "hard":
-            time_left = 5
+            time_left = 20
         
         picked_process = Thread(target=tick,args=(time_left,))
         picked_process.start()
         def end_game():
             subroot.destroy()
             picked_process.join()
+        subroot.protocol("WM_DELETE_WINDOW",end_game)
         if thread_ended:
             end_game()
         
-        subroot.protocol("WM_DELETE_WINDOW",end_game)
+        
         
     make_question()
 
