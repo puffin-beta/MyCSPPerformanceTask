@@ -45,6 +45,7 @@ def open_main():
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
 
+
 open_main()
 
 root.mainloop()
