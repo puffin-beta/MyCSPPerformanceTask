@@ -3,7 +3,7 @@ from tkinter import *
 import PIL
 from PIL import Image, ImageTk
 import major_zones
-from major_zones import create_ui, thread_ended
+from major_zones import create_ui, thread_ended, picked_process
 
 root = tk.Tk()
 
@@ -44,6 +44,9 @@ def open_main():
         major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=DISABLED)
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
+
+    if thread_ended:
+        picked_process.join()
 
 
 open_main()

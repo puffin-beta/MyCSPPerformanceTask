@@ -8,6 +8,7 @@ from threading import Thread, Event
 import sys
 
 thread_ended = False
+picked_process = None
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -110,11 +111,12 @@ def create_ui(timer):
         elif timer == "hard":
             time_left = 20
         
+        global picked_process
         picked_process = Thread(target=tick,args=(time_left,))
         picked_process.start()
         def end_game():
             subroot.destroy()
-            picked_process.join()
+            #picked_process.join()
         subroot.protocol("WM_DELETE_WINDOW",end_game)
         if thread_ended:
             end_game()
