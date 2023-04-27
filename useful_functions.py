@@ -40,21 +40,19 @@ class Question:
         def create_question(self):
             self.index = 2
             self.string = str(questions_list[self.index-1])
-            if self.index == 2:
-                self.picked_index = r.randint(0,len(city))
-                self.random_city = city[self.picked_index]
-                self.state = state[self.picked_index]
-                self.create_wrong_answers(self.state)
+            self.picked_index = r.randint(0,len(city))
+            self.random_city = city[self.picked_index]
+            self.state = state[self.picked_index]
+            self.create_wrong_answers(self.state)
         def create_wrong_answers(self,correct_answer):
             self.list_of_wrong_answers = []
-            if self.index == 2:
-                for i in range(3):
-                    j = r.randint(0,len(state))
-                    if state[j] in self.list_of_wrong_answers:
-                        continue
-                    else:
-                        k = state[j]
-                        self.list_of_wrong_answers.append(k)
+            for i in range(3):
+                j = r.randint(0,len(state))
+                if state[j] in self.list_of_wrong_answers:
+                    continue
+                else:
+                    wrong_answer = state[j]
+                    self.list_of_wrong_answers.append(wrong_answer)
 
 class Button2(Button):
     def __init__(self,*args,**kwargs):
