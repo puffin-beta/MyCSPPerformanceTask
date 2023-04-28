@@ -1,11 +1,7 @@
 import tkinter as tk
 from tkinter import *
-import PIL
 from PIL import Image, ImageTk
-import major_zones
-import threading
 from threading import *
-import major_zones
 from major_zones import create_ui, tick_time, thread_ended, picked_process, counter
 
 root = tk.Tk()
