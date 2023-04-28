@@ -11,7 +11,35 @@ thread_ended = False
 picked_process = None
 counter = 0
 
+def tick_time1(max_time,method):
+            global thread_ended
+            thread_ended = False
+            max = max_time
+            if method == 1:
+                if not thread_ended:
+                    while max > 0:
+                        if answered.is_set():
+                            max = max_time
+                            continue 
+                        time.sleep(1)
+                        max -= 1
+                        global time_label
+                        time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
+                        time_label.grid(column=4,row=0)     
+                    print("Timer loop exitted. Game is Over")
+                    thread_ended = True
+                    time_label.destroy()
+                    subroot.destroy()
+                    sys.exit(1)
+            elif method == 2:
+                global counter
+                counter = 0
+                while True:
+                    time.sleep(1)
+                    counter += 1
+
 def create_ui(timer):
+    global subroot
     subroot = tk.Tk()
     
     lib.get_lists()
@@ -82,35 +110,36 @@ def create_ui(timer):
         my_button4['command'] = lambda:evaluate_answer(my_button4_correct,q1.state)
         my_button4.grid(column=0,row=5)
 
+        global answered
         answered = Event()
 
-        global tick_time
-        def tick_time(max_time,method):
-            global thread_ended
-            thread_ended = False
-            max = max_time
-            if method == 1:
-                if not thread_ended:
-                    while max > 0:
-                        if answered.is_set():
-                            max = max_time
-                            continue 
-                        time.sleep(1)
-                        max -= 1
-                        global time_label
-                        time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
-                        time_label.grid(column=4,row=0)     
-                    print("Timer loop exitted. Game is Over")
-                    thread_ended = True
-                    time_label.destroy()
-                    subroot.destroy()
-                    sys.exit(1)
-            elif method == 2:
-                global counter
-                counter = 0
-                while True:
-                    time.sleep(1)
-                    counter += 1
+        global tick_time1
+        # def tick_time1(max_time,method):
+        #     global thread_ended
+        #     thread_ended = False
+        #     max = max_time
+        #     if method == 1:
+        #         if not thread_ended:
+        #             while max > 0:
+        #                 if answered.is_set():
+        #                     max = max_time
+        #                     continue 
+        #                 time.sleep(1)
+        #                 max -= 1
+        #                 global time_label
+        #                 time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
+        #                 time_label.grid(column=4,row=0)     
+        #             print("Timer loop exitted. Game is Over")
+        #             thread_ended = True
+        #             time_label.destroy()
+        #             subroot.destroy()
+        #             sys.exit(1)
+        #     elif method == 2:
+        #         global counter
+        #         counter = 0
+        #         while True:
+        #             time.sleep(1)
+        #             counter += 1
 
             
         time_left = ''
@@ -122,7 +151,7 @@ def create_ui(timer):
             time_left = 20
         
         global picked_process
-        picked_process = Thread(target=tick_time,args=(time_left,1,))
+        picked_process = Thread(target=tick_time1,args=(time_left,1,))
         picked_process.start()
         def end_game():
             subroot.destroy()

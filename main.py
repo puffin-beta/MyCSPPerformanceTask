@@ -2,13 +2,15 @@ import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 from threading import *
-from major_zones import create_ui, tick_time, thread_ended, picked_process, counter
+import major_zones
+#from major_zones import create_ui, thread_ended, picked_process, counter
 
 root = tk.Tk()
 
 def start_thread():
+    #from major_zones import tick_time
     global active_counter
-    active_counter = Thread(target=tick_time,args=(0,2))
+    active_counter = Thread(target=major_zones.tick_time1,args=(0,2),daemon=True)
     active_counter.start()
 
 start_thread()
@@ -33,9 +35,8 @@ def open_main():
 
     def open_new():
         if drop_text.get() != "Select a difficulty:":
-            #screen.after(1,trans())
             diff = drop_text.get()
-            create_ui(diff)
+            major_zones.create_ui(diff)
 
     drop_text = StringVar()
     drop_text.set("Select a difficulty:")
@@ -55,15 +56,15 @@ def open_main():
     # active_counter = Thread(target=tick,args=(0,"increment",))
     # active_counter.start()
 
-    if thread_ended:
-        picked_process.join()
+    if major_zones.thread_ended:
+        major_zones.picked_process.join()
         #active_counter.join()
         #print("Game has been running for {second} seconds.".format(seconds=counter))
 
     global end_game
     def end_game():
         #active_counter.join()
-        print("Game has been running for {second} seconds.".format(second=counter))
+        print("Game has been running for {second} seconds.".format(second=major_zones.counter))
         quit()
 
 open_main()
