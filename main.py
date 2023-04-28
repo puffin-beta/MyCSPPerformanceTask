@@ -3,9 +3,19 @@ from tkinter import *
 import PIL
 from PIL import Image, ImageTk
 import major_zones
-from major_zones import create_ui, thread_ended, picked_process
+import threading
+from threading import *
+import major_zones
+from major_zones import create_ui, tick_time, thread_ended, picked_process, counter
 
 root = tk.Tk()
+
+def start_thread():
+    global active_counter
+    active_counter = Thread(target=tick_time,args=(0,2))
+    active_counter.start()
+
+start_thread()
 
 def open_main():
     height = 600
@@ -45,11 +55,25 @@ def open_main():
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
 
+    # global active_counter
+    # active_counter = Thread(target=tick,args=(0,"increment",))
+    # active_counter.start()
+
     if thread_ended:
         picked_process.join()
+        #active_counter.join()
+        #print("Game has been running for {second} seconds.".format(seconds=counter))
 
+    global end_game
+    def end_game():
+        #active_counter.join()
+        print("Game has been running for {second} seconds.".format(second=counter))
+        quit()
 
 open_main()
+
+# if root.destroy():
+root.protocol("WM_DELETE_WINDOW",end_game)
 
 root.mainloop()
 

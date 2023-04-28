@@ -9,6 +9,7 @@ import sys
 
 thread_ended = False
 picked_process = None
+counter = 0
 
 def create_ui(timer):
     subroot = tk.Tk()
@@ -83,25 +84,34 @@ def create_ui(timer):
 
         answered = Event()
 
-        def tick(max_time):
+        global tick_time
+        def tick_time(max_time,method):
             global thread_ended
             thread_ended = False
             max = max_time
-            if not thread_ended:
-                while max > 0:
-                    if answered.is_set():
-                        max = max_time
-                        continue 
+            if method == 1:
+                if not thread_ended:
+                    while max > 0:
+                        if answered.is_set():
+                            max = max_time
+                            continue 
+                        time.sleep(1)
+                        max -= 1
+                        global time_label
+                        time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
+                        time_label.grid(column=4,row=0)     
+                    print("Timer loop exitted. Game is Over")
+                    thread_ended = True
+                    time_label.destroy()
+                    subroot.destroy()
+                    sys.exit(1)
+            elif method == 2:
+                global counter
+                counter = 0
+                while True:
                     time.sleep(1)
-                    max -= 1
-                    global time_label
-                    time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
-                    time_label.grid(column=4,row=0)     
-                print("Timer loop exitted")
-                thread_ended = True
-                time_label.destroy()
-                subroot.destroy()
-                sys.exit(1)
+                    counter += 1
+
             
         time_left = ''
         if timer == "easy":
@@ -112,7 +122,7 @@ def create_ui(timer):
             time_left = 20
         
         global picked_process
-        picked_process = Thread(target=tick,args=(time_left,))
+        picked_process = Thread(target=tick_time,args=(time_left,1,))
         picked_process.start()
         def end_game():
             subroot.destroy()
@@ -120,8 +130,6 @@ def create_ui(timer):
         subroot.protocol("WM_DELETE_WINDOW",end_game)
         if thread_ended:
             end_game()
-        
-        
         
     make_question()
 
