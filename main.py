@@ -3,14 +3,13 @@ from tkinter import *
 from PIL import Image, ImageTk
 from threading import *
 import major_zones
-#from major_zones import create_ui, thread_ended, picked_process, counter
+import useful_functions as lib
 
 root = tk.Tk()
 
 def start_thread():
-    #from major_zones import tick_time
     global active_counter
-    active_counter = Thread(target=major_zones.tick_time1,args=(0,2),daemon=True)
+    active_counter = Thread(target=lib.tick_time1,args=(0,2,root,))
     active_counter.start()
 
 start_thread()
@@ -52,24 +51,16 @@ def open_main():
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
 
-    # global active_counter
-    # active_counter = Thread(target=tick,args=(0,"increment",))
-    # active_counter.start()
-
     if major_zones.thread_ended:
         major_zones.picked_process.join()
-        #active_counter.join()
-        #print("Game has been running for {second} seconds.".format(seconds=counter))
 
     global end_game
     def end_game():
-        #active_counter.join()
-        print("Game has been running for {second} seconds.".format(second=major_zones.counter))
+        print("Game has been running for {second} seconds.".format(second=lib.counter))
         quit()
 
 open_main()
 
-# if root.destroy():
 root.protocol("WM_DELETE_WINDOW",end_game)
 
 root.mainloop()

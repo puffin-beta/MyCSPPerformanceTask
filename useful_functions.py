@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 import csv
 import time
+import sys
 
 
 def get_lists():
@@ -26,13 +27,35 @@ def get_lists():
         city.append(col["city"])
         state.append(col["state_name"])
 
+def tick_time1(max_time,method,page,eventHandle=None):
+            global thread_ended
+            answered = eventHandle
+            subroot = page
+            thread_ended = False
+            max = max_time
+            if method == 1:
+                if not thread_ended:
+                    while max > 0:
+                        if answered.is_set():
+                            max = max_time
+                            continue 
+                        time.sleep(1)
+                        max -= 1
+                        global time_label
+                        time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
+                        time_label.grid(column=4,row=0)     
+                    print("Timer loop exitted. Game is Over")
+                    thread_ended = True
+                    time_label.destroy()
+                    subroot.destroy()
+                    sys.exit(1)
+            elif method == 2:
+                global counter
+                counter = 0
+                while True:
+                    time.sleep(1)
+                    counter += 1
 
-def tick(max_time):
-    while max_time > 0:
-        time.sleep(1)
-        max_time -= 1
-        return max_time
-    return 0
 
 class Question:
         def __init__(self):
