@@ -28,33 +28,33 @@ def get_lists():
         state.append(col["state_name"])
 
 def tick_time1(max_time,method,page,eventHandle=None):
-            global thread_ended
-            answered = eventHandle
-            subroot = page
-            thread_ended = False
-            max = max_time
-            if method == 1:
-                if not thread_ended:
-                    while max > 0:
-                        if answered.is_set():
-                            max = max_time
-                            continue 
-                        time.sleep(1)
-                        max -= 1
-                        global time_label
-                        time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
-                        time_label.grid(column=4,row=0)     
-                    print("Timer loop exitted. Game is Over")
-                    thread_ended = True
-                    time_label.destroy()
-                    subroot.destroy()
-                    sys.exit(1)
-            elif method == 2:
-                global counter
-                counter = 0
-                while True:
-                    time.sleep(1)
-                    counter += 1
+    answered = eventHandle
+    subroot = page
+    global thread_ended
+    thread_ended = False
+    max = max_time
+    if method == 1:
+        if not thread_ended:
+            while max > 0:
+                if answered.is_set():
+                    max = max_time
+                    continue 
+                time.sleep(1)
+                max -= 1
+                global time_label
+                time_label = tk.Label(subroot,text=str(max).zfill(2),font=("Verdana",30),bg="White")
+                time_label.grid(column=4,row=0)     
+            print("Timer loop exitted. Game is Over")
+            thread_ended = True
+            time_label.destroy()
+            subroot.destroy()
+            sys.exit(1)
+    elif method == 2:
+        global counter
+        counter = 0
+        while True:
+            time.sleep(1)
+            counter += 1
 
 
 class Question:
@@ -82,34 +82,3 @@ class Button2(Button):
         Button.__init__(self,*args,**kwargs)
     def addCorrect(self,correct):
         self.correct = correct
-
-# class Timer:
-#     def __init__(self,root,difficulty):
-#         self.difficulty = difficulty
-#         self.max_time = 0
-#         self.root = root
-#         if self.difficulty == "easy":
-#             self.max_time = 45
-#         elif self.difficulty == "medium":
-#             self.max_time = 30
-#         elif self.difficulty == "hard":
-#             self.max_time = 20
-#     def tick(self):
-#         startTime = time.time()
-#         currentTime = startTime
-#         while (currentTime - startTime < self.max_time):
-#             temp = ""
-#             currentTime = time.time()
-#             deltaTime = int(self.max_time - (currentTime - startTime))
-#             #print(deltaTime)
-#             last_time = int(time.gmtime().tm_sec)
-#             if (last_time - deltaTime >= 1) :
-#                 last_time -= 1
-#                 print(last_time)
-#             #print(" ")
-#             self.root.update()
-#         print("Time is up")
-#         #last_time = float(time.gmtime().tm_sec)
-
-    
-        

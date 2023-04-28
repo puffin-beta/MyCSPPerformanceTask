@@ -51,8 +51,10 @@ def open_main():
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
 
-    if major_zones.thread_ended:
-        major_zones.picked_process.join()
+    timer_thread = major_zones.picked_process
+
+    if lib.thread_ended:
+        timer_thread.join()
 
     global end_game
     def end_game():

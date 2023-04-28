@@ -7,7 +7,6 @@ import time
 from threading import Thread, Event
 import sys
 
-thread_ended = False
 picked_process = None
 
 def create_ui(timer):
@@ -102,7 +101,7 @@ def create_ui(timer):
         def end_game():
             subroot.destroy()
         subroot.protocol("WM_DELETE_WINDOW",end_game)
-        if thread_ended:
+        if lib.thread_ended:
             end_game()
         
     make_question()
