@@ -84,7 +84,7 @@ def create_ui(timer):
         global answered
         answered = Event()
 
-        global tick_time1
+        global tick_time
     
         time_left = ''
         if timer == "easy":
@@ -94,9 +94,9 @@ def create_ui(timer):
         elif timer == "hard":
             time_left = 20
         
-        global picked_process
-        picked_process = Thread(target=lib.tick_time1,args=(time_left,1,subroot,answered,))
-        picked_process.start()
+        global time_thread
+        time_thread = Thread(target=lib.tick_time,args=(1,time_left,subroot,answered,))
+        time_thread.start()
 
         def end_game():
             subroot.destroy()

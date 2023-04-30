@@ -9,7 +9,7 @@ root = tk.Tk()
 
 def start_thread():
     global active_counter
-    active_counter = Thread(target=lib.tick_time1,args=(0,2,root,))
+    active_counter = Thread(target=lib.tick_time,args=(2,))
     active_counter.start()
 
 start_thread()
@@ -51,10 +51,10 @@ def open_main():
     major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
     major_zones_btn.grid(column=2,row=3)
 
-    timer_thread = major_zones.picked_process
+    time_thread = major_zones.time_thread
 
     if lib.thread_ended:
-        timer_thread.join()
+        time_thread.join()
 
     global end_game
     def end_game():

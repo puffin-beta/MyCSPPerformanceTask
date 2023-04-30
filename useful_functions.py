@@ -27,7 +27,7 @@ def get_lists():
         city.append(col["city"])
         state.append(col["state_name"])
 
-def tick_time1(max_time,method,page,eventHandle=None):
+def tick_time(method,max_time=None,page=None,eventHandle=None):
     answered = eventHandle
     subroot = page
     global thread_ended
