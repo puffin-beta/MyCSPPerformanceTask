@@ -92,7 +92,7 @@ def open_main():
     global end_game
     def end_game():
         # Prints the number of seconds and quits the application
-        print("Game has been running for {second} seconds.".format(second=lib.counter))
+        print("You\'ve been playing for {second} seconds. Keep up the good work!".format(second=lib.counter))
         quit()
 
 open_main()
