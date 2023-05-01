@@ -102,30 +102,3 @@ root.protocol("WM_DELETE_WINDOW",end_game)
 
 # Starts the game
 root.mainloop()
-
-# Sources used log (for future benefit):
-#
-# https://raw.githubusercontent.com/grammakov/USA-cities-and-states/master/us_cities_states_counties.csv
-#
-# https://www.youtube.com/watch?v=itRLRfuL_PQ (basic tkinter functionality)
-#
-# https://www.youtube.com/watch?v=q2LI3w-RGL0 (add CSV to tkinter)
-#
-# https://www.geeksforgeeks.org/python-geometry-method-in-tkinter/
-#
-# https://www.tutorialspoint.com/python/tk_listbox.htm
-# https://www.geeksforgeeks.org/python-tkinter-listbox-widget/
-# https://www.geeksforgeeks.org/python-tkinter-listbox-widget/
-# https://www.geeksforgeeks.org/how-to-read-text-file-into-list-in-python/
-#
-#
-# https://www.geeksforgeeks.org/python-read-csv-columns-into-list/
-# (^^ above link for one code segment in major_zones.py)
-#
-# https://simplemaps.com/data/us-cities. (new database)
-#
-# https://java2blog.com/add-character-to-string-in-python/ (character substitution in string)
-#
-# https://stackoverflow.com/questions/24050068/tkinter-making-classes-for-buttons-and-labels
-# (^^^ above link for inheriting tkinter button class)
-#

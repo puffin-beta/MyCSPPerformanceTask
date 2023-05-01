@@ -14,6 +14,7 @@ def get_lists():
     global questions_list, city, state
     
     # opens the raw CSV data
+    # Data imported from https://simplemaps.com/data/us-cities. table names city and state_name
     raw_data = open("uscities.csv","r")
 
     # reads the question frames from the 
