@@ -91,6 +91,7 @@ def open_main():
     # Function for when the "X" button at top right is pressed
     global end_game
     def end_game():
+        # Prints the number of seconds and quits the application
         print("Game has been running for {second} seconds.".format(second=lib.counter))
         quit()
 
