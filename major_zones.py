@@ -79,14 +79,13 @@ def create_ui(timer):
             global txt
             if IsCorrect == "True":
                 txt = "Correct"
-                #print("Correct")
             elif IsCorrect == "False":
                 txt = "Wrong. the correct answer is {correct}".format(correct=correct_option)
-                #print("Wrong. the correct answer is {correct}".format(correct=correct_option))
             
             # Sets event handler for timer to reset
             answered.set()
 
+            # Puts the evaluation in the form of a label
             evaluation = tk.Label(subroot,text=txt,font=("Verdana",20),bg="White")
             evaluation.grid(column=0,row=9)
 
