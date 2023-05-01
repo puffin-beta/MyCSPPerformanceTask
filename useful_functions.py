@@ -8,20 +8,20 @@ import sys
 
 def get_lists():
     global questions_list, city, state
-    questions_list = []
+    
     raw_data = open("uscities.csv","r")
 
+    questions_list = []
     questions_data = open("question-starters.txt","r")
-
-    state = []
-    city = []
     for i in range(3):
         temp = questions_data.readline()
         temp = temp[:-1]
         questions_list.append(temp)
     
     del temp
-    
+
+    state = []
+    city = []
     reader = csv.DictReader(raw_data)
     for col in reader:
         city.append(col["city"])
