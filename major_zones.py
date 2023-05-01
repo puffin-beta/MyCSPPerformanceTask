@@ -40,6 +40,11 @@ def create_ui(timer):
         answers[right_answer_index] = q1.state
 
         def evaluate_answer(IsCorrect,correct_option):
+            if IsCorrect == "True":
+                print("Correct")
+            elif IsCorrect == "False":
+                print("Wrong. the correct answer is {correct}".format(correct=correct_option))
+            
             answered.set()
             my_button.destroy()
             my_button2.destroy()
@@ -49,14 +54,6 @@ def create_ui(timer):
             lib.time_label.destroy()
             make_question()
             
-            if IsCorrect == "True":
-                print("Correct")
-            elif IsCorrect == "False":
-                print("Wrong. the correct answer is {correct}".format(correct=correct_option))
-            elif IsCorrect == "NULL":
-                print("Not Answered")
-
-    
         my_button_correct = ("True" if answers[0] == q1.state else "False")
         my_button = Button2(subroot,text=(answers[0]),font=("Verdana",15))
         my_button.addCorrect(my_button_correct)

@@ -56,7 +56,6 @@ def tick_time(method,max_time=None,page=None,eventHandle=None):
             time.sleep(1)
             counter += 1
 
-
 class Question:
         def __init__(self):
             pass
