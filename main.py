@@ -1,3 +1,18 @@
+###############################
+#
+# APCSP
+# Period 3
+#
+# This is a game built using Tkinter
+# that quizzes knowledge on US Cities
+#
+# Dependencies (for all three files): tkinter, Image, ImageTK,
+# threading, major_zones, useful_functions,
+# time, sys, random, csv
+#
+###############################
+
+# Import the modules
 import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
@@ -5,8 +20,11 @@ from threading import *
 import major_zones
 import useful_functions as lib
 
+# Create the object that houses the entire game
 root = tk.Tk()
 
+# Starts the active counter thread that counts
+# how long the application is running for
 def start_thread():
     global active_counter
     active_counter = Thread(target=lib.tick_time,args=(2,))
@@ -14,7 +32,10 @@ def start_thread():
 
 start_thread()
 
+# The main function
 def open_main():
+
+    # Specifies the main screen properties
     height = 600
     width = 800
     logo = Image.open("logo.png")
@@ -22,38 +43,52 @@ def open_main():
     root.iconphoto(False,logo)
     root.title("Where Are You!")
 
+    # Creates the main screen with those properties.
     screen = tk.Canvas(root,width=width,height=height,bg="white")
     screen.grid(columnspan=6, rowspan=6)
 
+    # Title screen
     title_text = tk.Label(root,text="Test your US Geography Skills Here!",font=("Verdana",30),bg="White")
     title_text.grid(columnspan=10,column=0,row=0)
 
+    # Tells the user how to start the game
     prompt = tk.Label(root,text="Select a difficulty and click Start to begin",font=("Verdana",20),bg="White")
     prompt.grid(columnspan=10,column=0,row=1)
 
-
+    # Opens a new game window passing the 
+    # selected difficulty for the timer
     def open_new():
         if drop_text.get() != "Select a difficulty:":
             diff = drop_text.get()
             major_zones.create_ui(diff)
 
+    # Creates the dropdown that allows the user to
+    # select the three difficulty levels available:
+    # easy, medium, and hard
     drop_text = StringVar()
     drop_text.set("Select a difficulty:")
     options = ["easy","medium","hard"]
     time_drop = tk.OptionMenu(root,drop_text,*options)
     time_drop.grid(column=2,row=2)
 
-    major_zones_text = tk.StringVar()
-    major_zones_text.set("Start Game")
-    major_zones_btn = tk.Button(root)
+    # Creates the button that starts the game.
+    # The button is disabled when no difficulty
+    # level is selected, reminding the user to
+    # select a difficulty before starting
+    start_text = tk.StringVar()
+    start_text.set("Start Game")
+    start_btn = tk.Button(root)
     if drop_text.get() == "Select a difficulty:":
-        major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=DISABLED)
-    major_zones_btn = tk.Button(root, textvariable = major_zones_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
-    major_zones_btn.grid(column=2,row=3)
+        start_btn = tk.Button(root, textvariable = start_text, font="Verdana", command=lambda:open_new(), state=DISABLED)
+    start_btn = tk.Button(root, textvariable = start_text, font="Verdana", command=lambda:open_new(), state=NORMAL)
+    start_btn.grid(column=2,row=3)
 
+    # If timer thread has run out, it
+    # will merge with the main thread
     if lib.thread_ended:
         major_zones.time_thread.join()
 
+    # Function for when the "X" button at top right is pressed
     global end_game
     def end_game():
         print("Game has been running for {second} seconds.".format(second=lib.counter))
@@ -61,8 +96,10 @@ def open_main():
 
 open_main()
 
+# Event handler for the "X" button
 root.protocol("WM_DELETE_WINDOW",end_game)
 
+# Starts the game
 root.mainloop()
 
 # Sources used log (for future benefit):
