@@ -7,7 +7,10 @@ from useful_functions import *
 import random as r
 import time
 from threading import Thread, Event
+from multiprocessing import *
 import sys
+
+txt = ""
 
 # Main loop for the game window
 def create_ui(timer):
@@ -31,6 +34,9 @@ def create_ui(timer):
     # answers.
     def make_question():
 
+        global evaluation
+        evaluation = ""
+
         # Question object
         q1 = Question()
 
@@ -40,6 +46,7 @@ def create_ui(timer):
 
         # Takes question string from the "create_question" function
         # and inserts the state name in it.
+        global final_str
         final_str = q1.string[:13] + ' ' + q1.random_city + q1.string[13:]
         label = tk.Label(subroot,text=final_str,font=("Verdana",20),bg="White")
         label.grid(column=0,row=0)
@@ -67,16 +74,21 @@ def create_ui(timer):
         # Checks if each answer is right or wrong and then
         # gives a new question
         def evaluate_answer(IsCorrect,correct_option):
-
             # Checks the answer based on the button object's
             # "correct" attribute
+            global txt
             if IsCorrect == "True":
-                print("Correct")
+                txt = "Correct"
+                #print("Correct")
             elif IsCorrect == "False":
-                print("Wrong. the correct answer is {correct}".format(correct=correct_option))
+                txt = "Wrong. the correct answer is {correct}".format(correct=correct_option)
+                #print("Wrong. the correct answer is {correct}".format(correct=correct_option))
             
             # Sets event handler for timer to reset
             answered.set()
+
+            evaluation = tk.Label(subroot,text=txt,font=("Verdana",20),bg="White")
+            evaluation.grid(column=0,row=9)
 
             # Clears the screen
             my_button.destroy()
@@ -145,7 +157,7 @@ def create_ui(timer):
         subroot.protocol("WM_DELETE_WINDOW",end_game)
         if lib.thread_ended:
             end_game()
-    
+        
     # Call to create first question
     make_question()
 
