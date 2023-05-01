@@ -9,12 +9,12 @@ import sys
 def get_lists():
     global questions_list, city, state
     questions_list = []
-    city = []
-    state = []
     raw_data = open("uscities.csv","r")
 
     questions_data = open("question-starters.txt","r")
 
+    state = []
+    city = []
     for i in range(3):
         temp = questions_data.readline()
         temp = temp[:-1]
